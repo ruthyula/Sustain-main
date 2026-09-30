@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Two Page Switch</title>
+  <style>
+   body {
+  margin: 0;
+  padding: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container:hover {
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+.impact {
+  padding: 40px 0;
+}
+.impact .impact-heading {
+  width: 700px;
+  margin-bottom: 40px;
+}
+
+ .impact-flex1 {
+  display: flex;
+  background-color: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+ .impact-inner {
+  flex: 2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 40px 20px;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  flex-grow: 2;
+}
+ .impact-inner-item{
+text-align: center;
+  max-width: 200px;
+}
+
+.impact-inner-item img{
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.impact-inner-item p {
+  margin-top: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+ .impact-inner2 {
+ flex: 3;
+  background-color: #6d9e31;
+  color: white;
+  padding: 40px;
+  font-size: 1rem;
+  line-height: 1.7;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+
+}
+
+
+  </style>
+</head>
+<body>
+<section class="impact">
+    
+      <div class=" impact-flex1">
+        
+          <div class="impact-inner">
+            <div class="impact-inner-item">
+              <img src="images/gtr.webp" alt="enviroment" class="envi-image"/>
+               <p>Environmental</p>
+            </div>
+            <div class="impact-inner-item">
+              <img src="images/gtr.webp" alt="enviroment" class="envi-image"/>
+               <p>Social</p>
+            </div>
+            <div class="impact-inner-item">
+              <img src="images/gtr.webp" alt="enviroment" class="envi-image"/>
+              <p>Governance</p>
+
+            </div>
+        
+        </div>
+        <div class="impact-inner2">
+          <p>
+            At KCB, sustainability is about ensuring long-term business success while contributing towards economic and social development, a healthy environment, and a stable society. We have therefore embraced Environmental, Social, and Governance (ESG) considerations in our operations and decision-making processes.
+          </p>
+
+        </div>
+        
+      </div>
+   
+  </section>
+
+</body>
+</html>
