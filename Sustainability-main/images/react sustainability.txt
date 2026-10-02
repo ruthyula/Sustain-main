@@ -1,0 +1,226 @@
+
+import React, { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight, Download, Leaf, Menu, ShieldCheck, Users, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const stories = [
+  {
+    title: "Highlands Creamers and Foods (HCF) Ltd",
+    text: "Supporting MSMEs as they transition toward more sustainable business practices. Highlands Creamers and Foods is an independently run, family-owned dairy and food processing business based in Nyansiongo, Nyamira County.",
+  },
+  {
+    title: "Morara Forest Rehabilitation",
+    text: "Working with forestry partners to support the rehabilitation of Morara Forest through conservation, improved access and long-term environmental stewardship.",
+  },
+];
+
+const esg = [
+  { title: "Environmental", icon: Leaf, color: "bg-emerald-600", text: "Green lending, renewable energy, tree-growing initiatives and carbon-footprint tracking." },
+  { title: "Social", icon: Users, color: "bg-amber-500", text: "Education, community health, economic empowerment and financial-literacy programmes." },
+  { title: "Governance", icon: ShieldCheck, color: "bg-sky-700", text: "Ethical conduct, transparency, compliance, regular audits and responsible decision-making." },
+];
+
+const sections = [
+  {
+    id: "environment",
+    eyebrow: "ENVIRONMENT",
+    title: "Our Environmental Approach",
+    description: "We protect the environment through green lending, renewable-energy financing, energy-efficient technology, tree-growing initiatives and carbon-footprint tracking.",
+    color: "emerald",
+    highlights: [
+      ["15%", "of the loan portfolio comprises green loans"],
+      ["202", "branches involved in tree planting and growing in Kenya"],
+      ["11.4%", "reduction in carbon-footprint intensity per staff member"],
+      ["KSh 615B", "green-finance portfolio"],
+      ["314,129", "trees supported through environmental initiatives"],
+      ["50%", "target indicator achieved"],
+    ],
+  },
+  {
+    id: "social",
+    eyebrow: "SOCIAL",
+    title: "Our Social Approach",
+    description: "We support community well-being by investing in education, health, economic empowerment and financial literacy.",
+    color: "amber",
+    highlights: [
+      ["13,352", "direct jobs created through the 2jiajiri programme"],
+      ["349", "participants in the Women in Leadership Forum"],
+      ["KSh 46B+", "in KCB M-Pesa loans disbursed"],
+      ["35", "employees with disabilities"],
+      ["KSh 1.7B", "value of life assurance"],
+      ["1.8M+", "mobile loans disbursed"],
+    ],
+  },
+  {
+    id: "governance",
+    eyebrow: "GOVERNANCE",
+    title: "Our Governance Approach",
+    description: "We promote ethical behaviour and transparency through strong governance, regular audits, regulatory compliance and responsible internal policies.",
+    color: "sky",
+    highlights: [
+      ["982", "full-time equivalent employees belonging to a union"],
+      ["8,315", "employees who signed declaration forms"],
+      ["KSh 5.2B", "value of bancassurance premiums"],
+      ["81%", "of suppliers signed up to the code of ethics"],
+      ["53,118", "bancassurance policies issued"],
+      ["96%", "of employees completed the relevant course"],
+    ],
+  },
+];
+
+const goals = [
+  [11, "Sustainable cities and communities", "bg-orange-500"],
+  [12, "Responsible consumption and production", "bg-amber-600"],
+  [13, "Climate action", "bg-green-700"],
+  [16, "Peace, justice and strong institutions", "bg-blue-700"],
+  [17, "Partnerships for the goals", "bg-blue-900"],
+];
+
+const tone = {
+  emerald: { badge: "text-emerald-700 bg-emerald-50", number: "text-emerald-700", panel: "bg-emerald-950" },
+  amber: { badge: "text-amber-700 bg-amber-50", number: "text-amber-700", panel: "bg-amber-950" },
+  sky: { badge: "text-sky-700 bg-sky-50", number: "text-sky-700", panel: "bg-sky-950" },
+};
+
+export default function SustainabilityWebsite() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [story, setStory] = useState(0);
+  const [tab, setTab] = useState(0);
+  const goalsRef = useRef(null);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setStory((value) => (value + 1) % stories.length), 7000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const moveStory = (direction) => setStory((value) => (value + direction + stories.length) % stories.length);
+  const scrollGoals = (direction) => goalsRef.current?.scrollBy({ left: direction * 280, behavior: "smooth" });
+
+  return (
+    <div className="min-h-screen overflow-x-hidden bg-stone-50 font-sans text-slate-900">
+      <header className="relative isolate min-h-[680px] overflow-hidden bg-slate-950 text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_30%,rgba(34,197,94,.34),transparent_35%),linear-gradient(120deg,#071811_0%,#0b2b20_55%,#102a43_100%)]" />
+        <div className="absolute -right-24 top-40 h-96 w-96 rounded-full border border-white/10" />
+        <div className="absolute -right-2 top-64 h-64 w-64 rounded-full border border-white/10" />
+
+        <nav className="relative z-20 border-b border-white/10" aria-label="Primary navigation">
+          <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-8">
+            <a href="#home" className="flex items-center gap-3 font-extrabold tracking-tight" aria-label="KCP Sustainability home">
+              <span className="grid h-11 w-11 place-items-center rounded-2xl bg-emerald-500 text-slate-950"><Leaf size={23} /></span>
+              <span className="text-lg">KCP <span className="font-medium text-emerald-300">Sustainability</span></span>
+            </a>
+            <div className="hidden items-center gap-8 md:flex">
+              {["Home", "ESG Approach", "Stories", "Reports"].map((item, index) => (
+                <a key={item} href={["#home", "#approach", "#stories", "#reports"][index]} className="text-sm font-semibold text-white/80 transition hover:text-emerald-300">{item}</a>
+              ))}
+            </div>
+            <button className="rounded-xl p-2 md:hidden" onClick={() => setMenuOpen(true)} aria-label="Open navigation menu"><Menu /></button>
+          </div>
+        </nav>
+
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm md:hidden" onClick={() => setMenuOpen(false)}>
+              <motion.div initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ type: "spring", damping: 25 }} className="ml-auto h-full w-[82%] max-w-sm bg-white p-6 text-slate-900" onClick={(e) => e.stopPropagation()}>
+                <div className="flex items-center justify-between"><strong>Menu</strong><button onClick={() => setMenuOpen(false)} aria-label="Close navigation menu"><X /></button></div>
+                <div className="mt-12 grid gap-2">
+                  {["Home", "ESG Approach", "Stories", "Reports"].map((item, index) => (
+                    <a key={item} href={["#home", "#approach", "#stories", "#reports"][index]} onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-4 font-semibold hover:bg-emerald-50">{item}</a>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <section id="home" className="relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-5 py-24 lg:grid-cols-[1.2fr_.8fr] lg:px-8 lg:py-32">
+          <div>
+            <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="mb-5 text-sm font-bold tracking-[.25em] text-emerald-300">BUILDING A GREENER FUTURE</motion.p>
+            <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .08 }} className="max-w-4xl text-5xl font-black leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">Progress that sustains <span className="text-emerald-400">people and planet.</span></motion.h1>
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .18 }} className="mt-7 max-w-2xl text-lg leading-8 text-white/70">We are committed to reducing our environmental footprint, strengthening communities and embedding responsible governance in every decision.</motion.p>
+            <div className="mt-9 flex flex-wrap gap-4">
+              <a href="#approach" className="rounded-full bg-emerald-400 px-6 py-3 font-bold text-slate-950 transition hover:bg-emerald-300">Explore our approach</a>
+              <a href="#reports" className="rounded-full border border-white/25 px-6 py-3 font-bold transition hover:border-white hover:bg-white/10">View reports</a>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4" aria-label="Sustainability highlights">
+            {[["12", "SDGs integrated"], ["202", "participating branches"], ["11.4%", "carbon-intensity reduction"], ["81%", "suppliers committed"]].map(([value, label], index) => (
+              <motion.div key={label} initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: .16 + index * .07 }} className={`rounded-3xl border border-white/10 bg-white/[.07] p-6 backdrop-blur ${index % 2 ? "translate-y-8" : ""}`}>
+                <div className="text-3xl font-black text-emerald-300">{value}</div><div className="mt-2 text-sm leading-5 text-white/65">{label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      </header>
+
+      <main>
+        <section id="stories" className="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
+          <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+            <div><p className="text-sm font-bold tracking-[.2em] text-emerald-700">IMPACT STORIES</p><h2 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">Change in action</h2></div>
+            <div className="flex gap-3">
+              <button onClick={() => moveStory(-1)} className="grid h-12 w-12 place-items-center rounded-full border border-slate-200 bg-white shadow-sm transition hover:border-emerald-500 hover:text-emerald-700" aria-label="Previous story"><ChevronLeft /></button>
+              <button onClick={() => moveStory(1)} className="grid h-12 w-12 place-items-center rounded-full bg-slate-900 text-white shadow-sm transition hover:bg-emerald-700" aria-label="Next story"><ChevronRight /></button>
+            </div>
+          </div>
+          <div className="relative min-h-[390px] overflow-hidden rounded-[2rem] bg-emerald-950 text-white shadow-xl">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_20%,rgba(74,222,128,.28),transparent_30%)]" />
+            <AnimatePresence mode="wait">
+              <motion.article key={story} initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }} transition={{ duration: .4 }} className="relative z-10 grid min-h-[390px] items-center gap-10 p-8 sm:p-12 lg:grid-cols-[1fr_.7fr] lg:p-16">
+                <div><p className="mb-4 font-bold text-emerald-300">STORY {String(story + 1).padStart(2, "0")}</p><h3 className="text-3xl font-black leading-tight sm:text-5xl">{stories[story].title}</h3><p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg">{stories[story].text}</p><a href="#" className="mt-8 inline-flex items-center gap-2 font-bold text-emerald-300 hover:text-white">Read the full story <ChevronRight size={18} /></a></div>
+                <div className="hidden aspect-square place-items-center rounded-full border border-white/10 bg-white/5 lg:grid"><Leaf className="text-emerald-400" size={120} strokeWidth={1} /></div>
+              </motion.article>
+            </AnimatePresence>
+          </div>
+          <div className="mt-5 flex justify-center gap-2">{stories.map((_, index) => <button key={index} onClick={() => setStory(index)} aria-label={`Show story ${index + 1}`} className={`h-2.5 rounded-full transition-all ${story === index ? "w-10 bg-emerald-600" : "w-2.5 bg-slate-300"}`} />)}</div>
+        </section>
+
+        <section className="border-y border-slate-200 bg-white py-20 lg:py-24">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <div className="grid gap-6 lg:grid-cols-3">{esg.map(({ title, icon: Icon, color, text }) => <article key={title} className="group rounded-3xl border border-slate-200 bg-stone-50 p-7 transition hover:-translate-y-1 hover:shadow-xl"><div className={`grid h-14 w-14 place-items-center rounded-2xl text-white ${color}`}><Icon /></div><h3 className="mt-6 text-2xl font-black">{title}</h3><p className="mt-3 leading-7 text-slate-600">{text}</p></article>)}</div>
+          </div>
+        </section>
+
+        <div id="approach">
+          {sections.map((section, index) => (
+            <section key={section.id} id={section.id} className={`py-20 lg:py-28 ${index % 2 ? "bg-white" : "bg-stone-50"}`}>
+              <div className="mx-auto max-w-7xl px-5 lg:px-8">
+                <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
+                  <div className={`rounded-[2rem] p-8 text-white sm:p-10 ${tone[section.color].panel}`}>
+                    <span className={`inline-block rounded-full px-3 py-1 text-xs font-black tracking-[.16em] ${tone[section.color].badge}`}>{section.eyebrow}</span>
+                    <h2 className="mt-7 text-4xl font-black leading-tight">{section.title}</h2>
+                    <p className="mt-6 leading-7 text-white/70">{section.description}</p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-black">Key highlights</h3>
+                    <div className="mt-6 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">{section.highlights.map(([value, label]) => <div key={value + label} className="border-b border-slate-200 py-6"><div className={`text-3xl font-black ${tone[section.color].number}`}>{value}</div><p className="mt-2 text-sm leading-6 text-slate-600">{label}</p></div>)}</div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          ))}
+        </div>
+
+        <section className="bg-slate-950 py-20 text-white lg:py-28">
+          <div className="mx-auto max-w-7xl px-5 lg:px-8">
+            <p className="text-sm font-bold tracking-[.2em] text-emerald-300">OUR PRIORITIES</p><h2 className="mt-3 max-w-3xl text-4xl font-black tracking-tight sm:text-5xl">Key SDG areas of sustainability impact</h2>
+            <div className="mt-10 inline-flex rounded-full bg-white/10 p-1" role="tablist" aria-label="Sustainability information"><button onClick={() => setTab(0)} className={`rounded-full px-5 py-2 text-sm font-bold ${tab === 0 ? "bg-emerald-400 text-slate-950" : "text-white/70"}`}>SDG priorities</button><button onClick={() => setTab(1)} className={`rounded-full px-5 py-2 text-sm font-bold ${tab === 1 ? "bg-emerald-400 text-slate-950" : "text-white/70"}`}>Impact setting</button></div>
+            <div className="mt-10">
+              {tab === 0 ? <>
+                <p className="max-w-3xl text-lg leading-8 text-white/65">We have integrated selected United Nations Sustainable Development Goals into our operational priorities to better understand how the business contributes to society.</p>
+                <div className="mt-9 flex items-center gap-3"><button onClick={() => scrollGoals(-1)} className="hidden h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 sm:grid" aria-label="Scroll goals left"><ChevronLeft /></button><div ref={goalsRef} className="flex snap-x gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{goals.map(([number, label, color]) => <div key={number} className={`min-h-56 min-w-[230px] snap-start rounded-3xl p-7 ${color}`}><div className="text-5xl font-black">{number}</div><div className="mt-12 max-w-[170px] text-lg font-bold leading-6">{label}</div></div>)}</div><button onClick={() => scrollGoals(1)} className="hidden h-11 w-11 shrink-0 place-items-center rounded-full bg-white/10 sm:grid" aria-label="Scroll goals right"><ChevronRight /></button></div>
+              </> : <div className="grid gap-6 md:grid-cols-3">{["Assess", "Prioritise", "Improve"].map((step, index) => <div key={step} className="rounded-3xl border border-white/10 bg-white/[.06] p-7"><span className="text-sm font-black text-emerald-300">0{index + 1}</span><h3 className="mt-4 text-2xl font-black">{step}</h3><p className="mt-3 leading-7 text-white/60">{["Conduct materiality assessments to identify significant ESG impacts.", "Focus resources on material areas across business operations.", "Review coverage regularly and strengthen future analysis."][index]}</p></div>)}</div>}
+            </div>
+          </div>
+        </section>
+
+        <section id="reports" className="bg-emerald-400 py-16">
+          <div className="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-5 sm:flex-row sm:items-center lg:px-8"><div><p className="font-bold text-emerald-950/65">REPORTING & DISCLOSURE</p><h2 className="mt-2 text-3xl font-black text-slate-950 sm:text-4xl">Explore our sustainability reports</h2></div><a href="#" className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-6 py-3 font-bold text-white hover:bg-slate-800"><Download size={19} /> Download reports</a></div>
+        </section>
+      </main>
+
+      <footer className="bg-slate-950 py-14 text-white/60">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8"><div className="grid gap-10 border-b border-white/10 pb-12 sm:grid-cols-2 lg:grid-cols-4"><div><div className="flex items-center gap-2 font-black text-white"><Leaf className="text-emerald-400" /> KCP Sustainability</div><p className="mt-4 max-w-xs text-sm leading-6">Responsible banking for enduring environmental, social and economic value.</p></div>{[["Explore", "Our approach", "Impact stories", "Reports"], ["Information", "What we do", "Careers", "Contact us"], ["Legal", "Privacy policy", "Terms of access", "Disclaimer"]].map(([heading, ...links]) => <div key={heading}><h3 className="font-bold text-white">{heading}</h3><ul className="mt-4 space-y-3 text-sm">{links.map(link => <li key={link}><a href="#" className="hover:text-emerald-300">{link}</a></li>)}</ul></div>)}</div><div className="flex flex-col justify-between gap-4 pt-8 text-xs sm:flex-row"><p>Regulated by the Central Bank of Kenya.</p><p>© 2026 KCP Group. All rights reserved.</p></div></div>
+      </footer>
+    </div>
+  );
+}
